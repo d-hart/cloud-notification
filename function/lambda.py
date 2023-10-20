@@ -6,21 +6,14 @@ import logging
 import boto3
 import csv
 import json
-import pytz
-import concurrent.futures
 from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime, timedelta, date
 from botocore.exceptions import ClientError
-from tydirium import Tydirium
 
+#OS Environment------------------------------------------------------------------------------#
+accounts_table = os.environ['account_table']
 
-#------------------------------#
-#--------OS Environment--------#
-#------------------------------#
-
-#------------------------------#
-#----------Debugging-----------#
-#------------------------------#
+#Debugging------------------------------------------------------------------------------#
 # set logging level- value options = CRITICAL, ERROR, WARNING, INFO, DEBUG, NOTSET
 logger = logging.getLogger('DelEbsSnapshots')
 logger.setLevel(logging.DEBUG)
@@ -31,8 +24,9 @@ event = {
   "email": "email@email.com"
 }
 
-#------------------------------#
-#----------Functions-----------#
-#------------------------------#
+#Functions------------------------------------------------------------------------------#
 def lambda_handler(event, context):
+    name = event['Name']
+    phone = event["Phone"]
+    email = event["email"]
     
